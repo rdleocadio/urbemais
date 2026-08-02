@@ -71,36 +71,41 @@ Mensagem: ${data.mensagem || 'Não informado'}
   form.reset();
 });
 
-const projectVideos = document.querySelectorAll('.project-video video');
+const galleryTrack = document.getElementById('galleryTrack');
+const galleryDots = document.getElementById('galleryDots');
 
-const videoObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.play().catch(() => {});
-      } else {
-        entry.target.pause();
-      }
+if (galleryTrack && galleryDots) {
+  const slides = Array.from(galleryTrack.querySelectorAll('.gallery-slide'));
+
+  slides.forEach((slide, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'gallery-dot';
+    dot.setAttribute('aria-label', `Ir para foto ${index + 1}`);
+    dot.addEventListener('click', () => {
+      slide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
-  },
-  { threshold: 0.5 }
-);
-
-projectVideos.forEach(video => videoObserver.observe(video));
-
-document.querySelectorAll('.sound-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const video = btn.closest('.project-video').querySelector('video');
-    video.muted = !video.muted;
-
-    btn.classList.toggle('is-unmuted', !video.muted);
-    btn.setAttribute('aria-label', video.muted ? 'Ativar som do vídeo' : 'Silenciar vídeo');
+    galleryDots.appendChild(dot);
   });
-});
 
-const projectsTrack = document.getElementById('projectsTrack');
+  const dots = Array.from(galleryDots.querySelectorAll('.gallery-dot'));
+  dots[0]?.classList.add('is-active');
 
-if (projectsTrack) {
+  const dotObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = slides.indexOf(entry.target);
+          dots.forEach(dot => dot.classList.remove('is-active'));
+          dots[index]?.classList.add('is-active');
+        }
+      });
+    },
+    { root: galleryTrack, threshold: 0.6 }
+  );
+
+  slides.forEach(slide => dotObserver.observe(slide));
+
   let isDragging = false;
   let isDrag = false;
   let startX = 0;
@@ -110,8 +115,8 @@ if (projectsTrack) {
     isDragging = true;
     isDrag = false;
     startX = clientX;
-    startScrollLeft = projectsTrack.scrollLeft;
-    projectsTrack.classList.add('is-dragging');
+    startScrollLeft = galleryTrack.scrollLeft;
+    galleryTrack.classList.add('is-dragging');
   };
 
   const moveDrag = clientX => {
@@ -123,15 +128,15 @@ if (projectsTrack) {
       isDrag = true;
     }
 
-    projectsTrack.scrollLeft = startScrollLeft - delta;
+    galleryTrack.scrollLeft = startScrollLeft - delta;
   };
 
   const endDrag = () => {
     isDragging = false;
-    projectsTrack.classList.remove('is-dragging');
+    galleryTrack.classList.remove('is-dragging');
   };
 
-  projectsTrack.addEventListener('mousedown', event => {
+  galleryTrack.addEventListener('mousedown', event => {
     startDrag(event.clientX);
   });
 
@@ -141,35 +146,29 @@ if (projectsTrack) {
 
   window.addEventListener('mouseup', endDrag);
 
-  projectsTrack.addEventListener('touchstart', event => {
+  galleryTrack.addEventListener('touchstart', event => {
     startDrag(event.touches[0].clientX);
   }, { passive: true });
 
-  projectsTrack.addEventListener('touchmove', event => {
+  galleryTrack.addEventListener('touchmove', event => {
     moveDrag(event.touches[0].clientX);
   }, { passive: true });
 
-  projectsTrack.addEventListener('touchend', endDrag);
+  galleryTrack.addEventListener('touchend', endDrag);
 
-  projectsTrack.addEventListener('click', event => {
+  galleryTrack.addEventListener('click', event => {
     if (isDrag) {
       event.preventDefault();
       event.stopPropagation();
     }
   }, true);
 
-  const scrollByCard = direction => {
-    const card = projectsTrack.querySelector('.project-card');
-    if (!card) return;
-
-    const gap = parseFloat(getComputedStyle(projectsTrack).columnGap) || 0;
-    const distance = card.getBoundingClientRect().width + gap;
-
-    projectsTrack.scrollBy({ left: distance * direction, behavior: 'smooth' });
+  const scrollBySlide = direction => {
+    galleryTrack.scrollBy({ left: galleryTrack.clientWidth * direction, behavior: 'smooth' });
   };
 
-  document.querySelector('.carousel-prev')?.addEventListener('click', () => scrollByCard(-1));
-  document.querySelector('.carousel-next')?.addEventListener('click', () => scrollByCard(1));
+  document.querySelector('.gallery-prev')?.addEventListener('click', () => scrollBySlide(-1));
+  document.querySelector('.gallery-next')?.addEventListener('click', () => scrollBySlide(1));
 }
 
 document.addEventListener('click', event => {
