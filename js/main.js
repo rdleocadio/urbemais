@@ -146,16 +146,6 @@ if (galleryTrack && galleryDots) {
 
   window.addEventListener('mouseup', endDrag);
 
-  galleryTrack.addEventListener('touchstart', event => {
-    startDrag(event.touches[0].clientX);
-  }, { passive: true });
-
-  galleryTrack.addEventListener('touchmove', event => {
-    moveDrag(event.touches[0].clientX);
-  }, { passive: true });
-
-  galleryTrack.addEventListener('touchend', endDrag);
-
   galleryTrack.addEventListener('click', event => {
     if (isDrag) {
       event.preventDefault();

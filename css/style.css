@@ -318,29 +318,11 @@ h2 {
   text-align: center;
 }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
-}
-
-.values,
 .steps {
   display: grid;
-  gap: 18px;
-}
-
-.values {
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 14px;
-  align-content: start;
-}
-
-.steps {
   gap: 32px;
 }
 
-.value,
 .step {
   position: relative;
   background: rgba(255, 255, 255, 0.42);
@@ -350,27 +332,13 @@ h2 {
   transition: 0.3s ease;
 }
 
-.value {
-  padding: 20px 18px;
-}
-
-.value:hover,
 .step:hover {
   transform: translateY(-6px);
   background: var(--lime);
 }
 
-.value span,
 .step span {
   font-family: var(--title);
-  color: var(--sage);
-}
-
-.value span {
-  font-size: 28px;
-}
-
-.step span {
   width: 52px;
   height: 52px;
   font-size: 19px;
@@ -401,25 +369,13 @@ h2 {
   pointer-events: none;
 }
 
-.value h3,
 .step h3 {
   margin: 14px 0 10px;
   font-size: 24px;
 }
 
-.value h3 {
-  margin: 10px 0 6px;
-  font-size: 17px;
-}
-
-.value p,
 .step p {
   line-height: 1.6;
-}
-
-.value p {
-  font-size: 13px;
-  line-height: 1.5;
 }
 
 .process {
@@ -768,7 +724,6 @@ textarea {
 /* TABLET */
 
 @media (max-width: 1024px) {
-  .about-grid,
   .showcase-grid {
     grid-template-columns: 1fr;
   }
@@ -898,7 +853,6 @@ textarea {
     text-align: center;
   }
 
-  .about-grid,
   .showcase-grid {
     grid-template-columns: 1fr;
     gap: 42px;
@@ -968,8 +922,7 @@ textarea {
   }
 
   .gallery-btn {
-    width: 36px;
-    height: 36px;
+    display: none;
   }
 
   .project-info {
