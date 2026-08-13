@@ -443,6 +443,7 @@ h2 {
 
 .gallery-slide {
   flex: 0 0 100%;
+  width: 100%;
   scroll-snap-align: center;
   aspect-ratio: 16 / 9;
 }
