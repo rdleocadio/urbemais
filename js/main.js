@@ -71,10 +71,12 @@ Mensagem: ${data.mensagem || 'Não informado'}
   form.reset();
 });
 
-const galleryTrack = document.getElementById('galleryTrack');
-const galleryDots = document.getElementById('galleryDots');
+const initGallery = gallery => {
+  const galleryTrack = gallery.querySelector('.gallery-track');
+  const galleryDots = gallery.querySelector('.gallery-dots');
 
-if (galleryTrack && galleryDots) {
+  if (!galleryTrack || !galleryDots) return;
+
   const slides = Array.from(galleryTrack.querySelectorAll('.gallery-slide'));
 
   slides.forEach((slide, index) => {
@@ -83,7 +85,7 @@ if (galleryTrack && galleryDots) {
     dot.className = 'gallery-dot';
     dot.setAttribute('aria-label', `Ir para foto ${index + 1}`);
     dot.addEventListener('click', () => {
-      slide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      galleryTrack.scrollTo({ left: index * galleryTrack.clientWidth, behavior: 'smooth' });
     });
     galleryDots.appendChild(dot);
   });
@@ -132,6 +134,8 @@ if (galleryTrack && galleryDots) {
   };
 
   const endDrag = () => {
+    if (!isDragging) return;
+
     isDragging = false;
     galleryTrack.classList.remove('is-dragging');
   };
@@ -157,8 +161,55 @@ if (galleryTrack && galleryDots) {
     galleryTrack.scrollBy({ left: galleryTrack.clientWidth * direction, behavior: 'smooth' });
   };
 
-  document.querySelector('.gallery-prev')?.addEventListener('click', () => scrollBySlide(-1));
-  document.querySelector('.gallery-next')?.addEventListener('click', () => scrollBySlide(1));
+  gallery.querySelector('.gallery-prev')?.addEventListener('click', () => scrollBySlide(-1));
+  gallery.querySelector('.gallery-next')?.addEventListener('click', () => scrollBySlide(1));
+};
+
+document.querySelectorAll('.project-gallery').forEach(initGallery);
+
+const projectsTrack = document.getElementById('projectsTrack');
+const projectsDots = document.getElementById('projectsDots');
+
+if (projectsTrack && projectsDots) {
+  const projects = Array.from(projectsTrack.querySelectorAll('.projects-slide'));
+
+  const goToProject = index => {
+    projectsTrack.scrollTo({ left: index * projectsTrack.clientWidth, behavior: 'smooth' });
+  };
+
+  projects.forEach((project, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'projects-dot';
+    dot.setAttribute('aria-label', `Ver projeto ${project.dataset.project || index + 1}`);
+    dot.addEventListener('click', () => goToProject(index));
+    projectsDots.appendChild(dot);
+  });
+
+  const dots = Array.from(projectsDots.querySelectorAll('.projects-dot'));
+  dots[0]?.classList.add('is-active');
+
+  const projectObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = projects.indexOf(entry.target);
+          dots.forEach(dot => dot.classList.remove('is-active'));
+          dots[index]?.classList.add('is-active');
+        }
+      });
+    },
+    { root: projectsTrack, threshold: 0.6 }
+  );
+
+  projects.forEach(project => projectObserver.observe(project));
+
+  const scrollByProject = direction => {
+    projectsTrack.scrollBy({ left: projectsTrack.clientWidth * direction, behavior: 'smooth' });
+  };
+
+  document.querySelector('.projects-prev')?.addEventListener('click', () => scrollByProject(-1));
+  document.querySelector('.projects-next')?.addEventListener('click', () => scrollByProject(1));
 }
 
 document.addEventListener('click', event => {
