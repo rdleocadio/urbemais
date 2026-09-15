@@ -62,56 +62,73 @@
   </header>
 
   <main>
-    <section class="project-hero">
-      <div class="hero-bg-grid" aria-hidden="true"></div>
-
-      <a href="projetos.html" class="breadcrumb reveal">
+    <section class="project-topbar">
+      <a href="projetos.html" class="breadcrumb">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
           <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         Todos os projetos
       </a>
+    </section>
 
-      <article class="project-hero-card reveal card-reveal">
-        <div class="project-hero-media">
-          <img
-            src="assets/lumy_guaya/web/fachada.jpg"
-            alt="Fachada do projeto Lumy Guayá"
-          >
+    <section class="project-banner" aria-label="Espaços do Lumy Guayá">
+      <div class="project-gallery gallery-banner">
+        <div class="gallery-track">
+          <div class="gallery-slide"><img src="assets/lumy_guaya/web/fachada.jpg" alt="Fachada do projeto Lumy Guayá" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-01.jpg" alt="Casal em frente à fachada com mural de arte urbana do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-02.jpg" alt="Piscina com vista panorâmica do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-03.jpg" alt="Moradores na churrasqueira e área gourmet do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-04.jpg" alt="Moradores reunidos no salão de festas do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-05.jpg" alt="Moradores treinando na academia do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
         </div>
 
-        <div class="project-hero-info">
-          <span class="tag">novo projeto &middot; Guaianases</span>
+        <button class="gallery-btn gallery-prev" type="button" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
 
-          <h1>Lumy Guayá</h1>
+        <button class="gallery-btn gallery-next" type="button" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
 
-          <p class="project-hero-address">
-            Estrada de Poá, nº 1600 &middot; Guaianases, São Paulo
-          </p>
+        <div class="gallery-dots"></div>
+      </div>
+    </section>
 
-          <ul class="project-specs">
-            <li>24 a 35 m²</li>
-            <li>1 e 2 dormitórios</li>
-            <li>2 torres residenciais e 526 unidades</li>
-            <li>Perto da Estação Guaianases da CPTM</li>
-          </ul>
+    <p class="gallery-note">
+      Imagens ilustrativas. Perspectivas artísticas dos ambientes do empreendimento.
+    </p>
 
-          <div class="project-actions">
-            <a
-              href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Vi%20o%20projeto%20Lumy%20Guay%C3%A1%20da%20urbe%2B%20e%20quero%20saber%20mais%20sobre%20esse%20empreendimento%20pelo%20Minha%20Casa%20Minha%20Vida."
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-cta"
-            >
-              Fale com a gente
-            </a>
+    <section class="project-lead">
+      <span class="tag">novo projeto &middot; Guaianases</span>
 
-            <a href="index.html#simulacao" class="btn-ghost">
-              Simular minha entrada
-            </a>
-          </div>
-        </div>
-      </article>
+      <h1>Lumy Guayá</h1>
+
+      <p class="project-refs">
+        Em Guaianases, São Paulo. Perto da Estação Guaianases e da futura
+        Estação Lajeado da CPTM (expansão prevista para 2027).
+      </p>
+
+      <ul class="project-specs">
+        <li>24 a 35 m²</li>
+        <li>1 e 2 dormitórios</li>
+        <li>2 torres residenciais e 526 unidades</li>
+        <li>Condomínio clube com piscina, fitness e mini market</li>
+      </ul>
+
+      <div class="project-actions">
+        <a
+          href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Quero%20or%C3%A7ar%20o%20projeto%20Lumy%20Guay%C3%A1%20pelo%20Minha%20Casa%20Minha%20Vida."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-cta"
+        >
+          Quero orçar esse projeto
+        </a>
+      </div>
 
       <div class="stat-strip reveal">
         <div class="stat">
@@ -147,9 +164,9 @@
         <article class="detail-block reveal card-reveal">
           <h3>Localização</h3>
           <p>
-            Estrada de Poá, nº 1600, em Guaianases. Oferece fácil mobilidade pela
-            proximidade com a Estação Guaianases e a futura Estação Lajeado da
-            CPTM (expansão prevista para 2027).
+            Em Guaianases, São Paulo. Oferece fácil mobilidade pela proximidade
+            com a Estação Guaianases e a futura Estação Lajeado da CPTM
+            (expansão prevista para 2027).
           </p>
         </article>
 
@@ -209,58 +226,21 @@
       </div>
     </section>
 
-    <section class="gallery-section" aria-labelledby="galeria-title">
-      <div class="section-title reveal">
-        <span>galeria</span>
-
-        <h2 id="galeria-title">Conheça os espaços.</h2>
-      </div>
-
-      <div class="project-gallery gallery-wide reveal card-reveal">
-        <div class="gallery-track">
-          <div class="gallery-slide"><img src="assets/lumy_guaya/web/fachada.jpg" alt="Fachada do projeto Lumy Guayá" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-01.jpg" alt="Casal em frente à fachada com mural de arte urbana do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-02.jpg" alt="Piscina com vista panorâmica do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-03.jpg" alt="Moradores na churrasqueira e área gourmet do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-04.jpg" alt="Moradores reunidos no salão de festas do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/lumy_guaya/web/foto-05.jpg" alt="Moradores treinando na academia do projeto Lumy Guayá" loading="lazy" draggable="false"></div>
-        </div>
-
-        <button class="gallery-btn gallery-prev" type="button" aria-label="Foto anterior">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-
-        <button class="gallery-btn gallery-next" type="button" aria-label="Próxima foto">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-
-        <div class="gallery-dots"></div>
-      </div>
-
-      <p class="gallery-note reveal">
-        Imagens ilustrativas. Perspectivas artísticas dos ambientes do empreendimento.
-      </p>
-    </section>
-
     <section class="process" aria-labelledby="cta-title">
       <div class="section-title reveal">
         <span>próximo passo</span>
 
-        <h2 id="cta-title">Vamos simular sua entrada?</h2>
+        <h2 id="cta-title">Vamos orçar esse projeto?</h2>
       </div>
 
       <div class="process-cta reveal">
         <a
-          href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Quero%20simular%20minha%20entrada%20no%20Lumy%20Guay%C3%A1%20pelo%20Minha%20Casa%20Minha%20Vida."
+          href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Quero%20or%C3%A7ar%20o%20projeto%20Lumy%20Guay%C3%A1%20pelo%20Minha%20Casa%20Minha%20Vida."
           target="_blank"
           rel="noopener noreferrer"
           class="btn-cta"
         >
-          Fale com a gente
+          Quero orçar esse projeto
         </a>
 
         <a href="projetos.html" class="btn-ghost">

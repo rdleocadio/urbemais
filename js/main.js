@@ -174,7 +174,13 @@ const projectsDots = document.getElementById('projectsDots');
 if (projectsTrack && projectsDots) {
   const projects = Array.from(projectsTrack.querySelectorAll('.projects-slide'));
 
+  /* O projeto atual fica em estado próprio, e não deduzido do scrollLeft: se a
+     rolagem suave ainda está a caminho, o scrollLeft antigo faria o autoplay
+     mirar sempre o mesmo slide e travar no primeiro projeto. */
+  let activeProject = 0;
+
   const goToProject = index => {
+    activeProject = index;
     projectsTrack.scrollTo({ left: index * projectsTrack.clientWidth, behavior: 'smooth' });
   };
 
@@ -183,7 +189,10 @@ if (projectsTrack && projectsDots) {
     dot.type = 'button';
     dot.className = 'projects-dot';
     dot.setAttribute('aria-label', `Ver projeto ${project.dataset.project || index + 1}`);
-    dot.addEventListener('click', () => goToProject(index));
+    dot.addEventListener('click', () => {
+      goToProject(index);
+      restartAutoplay();
+    });
     projectsDots.appendChild(dot);
   });
 
@@ -195,6 +204,8 @@ if (projectsTrack && projectsDots) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const index = projects.indexOf(entry.target);
+          // mantém o estado alinhado quando a pessoa arrasta o carrossel na mão
+          activeProject = index;
           dots.forEach(dot => dot.classList.remove('is-active'));
           dots[index]?.classList.add('is-active');
         }
@@ -205,12 +216,61 @@ if (projectsTrack && projectsDots) {
 
   projects.forEach(project => projectObserver.observe(project));
 
-  const scrollByProject = direction => {
-    projectsTrack.scrollBy({ left: projectsTrack.clientWidth * direction, behavior: 'smooth' });
+  const stepProject = direction => {
+    goToProject((activeProject + direction + projects.length) % projects.length);
   };
 
-  document.querySelector('.projects-prev')?.addEventListener('click', () => scrollByProject(-1));
-  document.querySelector('.projects-next')?.addEventListener('click', () => scrollByProject(1));
+  /* AUTOPLAY: passa de projeto em projeto sozinho, pausando quando a pessoa interage */
+
+  const AUTOPLAY_MS = 5000;
+  const carousel = projectsTrack.closest('.projects-carousel');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let autoplayId = null;
+
+  const startAutoplay = () => {
+    if (reduceMotion || autoplayId || projects.length < 2) return;
+
+    autoplayId = setInterval(() => stepProject(1), AUTOPLAY_MS);
+  };
+
+  const stopAutoplay = () => {
+    clearInterval(autoplayId);
+    autoplayId = null;
+  };
+
+  // depois de navegar na mão, reinicia a contagem em vez de pular logo em seguida
+  const restartAutoplay = () => {
+    stopAutoplay();
+    startAutoplay();
+  };
+
+  document.querySelector('.projects-prev')?.addEventListener('click', () => {
+    stepProject(-1);
+    restartAutoplay();
+  });
+
+  document.querySelector('.projects-next')?.addEventListener('click', () => {
+    stepProject(1);
+    restartAutoplay();
+  });
+
+  carousel?.addEventListener('mouseenter', stopAutoplay);
+  carousel?.addEventListener('mouseleave', startAutoplay);
+  carousel?.addEventListener('focusin', stopAutoplay);
+  carousel?.addEventListener('focusout', startAutoplay);
+  carousel?.addEventListener('touchstart', stopAutoplay, { passive: true });
+  carousel?.addEventListener('touchend', restartAutoplay, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
+  });
+
+  startAutoplay();
 }
 
 document.addEventListener('click', event => {

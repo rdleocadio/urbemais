@@ -197,23 +197,66 @@ textarea {
 
 .projects-lede {
   position: relative;
-  margin: 30px 0 4px;
-  padding-left: 18px;
+  display: inline-block;
+  margin: 34px 0 2px;
+  padding: 0 0 10px 22px;
   font-family: var(--title);
-  font-size: clamp(24px, 2.8vw, 36px);
-  letter-spacing: -1px;
+  font-size: clamp(27px, 3.3vw, 42px);
+  letter-spacing: -1.5px;
   line-height: 1.12;
+  transition: 0.3s ease;
+}
+
+/* a seta nunca fica sozinha numa linha: quebra junto da última palavra */
+.projects-lede .lede-tail {
+  white-space: nowrap;
 }
 
 .projects-lede::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 4px;
-  bottom: 4px;
-  width: 5px;
+  top: 2px;
+  bottom: 12px;
+  width: 6px;
   border-radius: 999px;
   background: var(--lime);
+}
+
+.projects-lede::after {
+  content: '';
+  position: absolute;
+  left: 22px;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--black);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.projects-lede:hover::after {
+  transform: scaleX(1);
+}
+
+/* a seta acompanha a última palavra em vez de flutuar ao lado do bloco */
+.projects-lede .lede-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-left: 14px;
+  vertical-align: middle;
+  border: 1px solid var(--black);
+  border-radius: 999px;
+  transition: 0.3s ease;
+}
+
+.projects-lede:hover .lede-arrow {
+  background: var(--lime);
+  transform: translateX(6px);
 }
 
 .showcase-grid {
@@ -550,7 +593,7 @@ h2 {
 .project-specs li {
   position: relative;
   padding-left: 18px;
-  color: var(--off);
+  color: inherit;
   font-size: 15px;
 }
 
@@ -573,9 +616,10 @@ h2 {
 }
 
 .btn-cta {
-  border: 0;
+  border: 1px solid var(--lime);
   border-radius: 999px;
-  padding: 16px 24px;
+  padding: 12px 22px;
+  font-size: 14px;
   font-weight: 800;
   font-family: var(--text);
   background: var(--lime);
@@ -595,7 +639,8 @@ h2 {
 .btn-ghost {
   border: 1px solid rgba(227, 255, 210, 0.45);
   border-radius: 999px;
-  padding: 15px 24px;
+  padding: 12px 22px;
+  font-size: 14px;
   font-weight: 800;
   font-family: var(--text);
   background: transparent;
@@ -872,8 +917,7 @@ textarea {
   gap: 10px;
 }
 
-.page-hero,
-.project-hero {
+.page-hero {
   position: relative;
   padding: 140px 8vw 60px;
   overflow: hidden;
@@ -971,11 +1015,8 @@ textarea {
   letter-spacing: -1px;
 }
 
-.catalog-body .project-specs li {
-  color: var(--black);
-}
-
-.catalog-body .project-specs li::before {
+.catalog-body .project-specs li::before,
+.project-lead .project-specs li::before {
   border: 1px solid var(--black);
 }
 
@@ -999,57 +1040,72 @@ textarea {
   color: #6bbd3d;
 }
 
-/* Hero da LP de projeto */
+/* LP de projeto: banner + cabeçalho */
 
-.project-hero-card {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  background: var(--black);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(35, 31, 32, 0.2);
+.project-topbar {
+  padding: 112px 8vw 20px;
 }
 
-.project-hero-media {
+.project-topbar .breadcrumb {
+  margin-bottom: 0;
+}
+
+.project-banner {
   position: relative;
-  min-height: 340px;
+  width: 100%;
+}
+
+.gallery-banner {
+  height: clamp(360px, 64vh, 640px);
   background: #000;
 }
 
-.project-hero-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.gallery-banner .gallery-btn {
+  width: 52px;
+  height: 52px;
 }
 
-.project-hero-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 8px;
-  padding: 40px 40px 42px;
-  color: var(--off);
+.gallery-banner .gallery-prev {
+  left: 26px;
 }
 
-.project-hero-info h1 {
-  font-size: clamp(34px, 3.6vw, 52px);
-  letter-spacing: -1.5px;
-  max-width: none;
+.gallery-banner .gallery-next {
+  right: 26px;
 }
 
-.project-hero-address {
-  color: var(--sage);
-  font-size: 15px;
+.gallery-banner .gallery-dots {
+  bottom: 22px;
+}
+
+.project-lead {
+  padding: 52px 8vw 0;
+}
+
+.project-lead h1 {
+  font-size: clamp(38px, 5.4vw, 78px);
+  max-width: 900px;
+}
+
+.project-refs {
+  max-width: 660px;
+  margin-top: 18px;
+  font-size: 17px;
   font-weight: 700;
-  margin-bottom: 10px;
+  line-height: 1.6;
+  color: rgba(35, 31, 32, 0.72);
 }
 
-.project-hero-info .project-specs {
-  margin-bottom: 18px;
+.project-lead .project-specs {
+  margin: 26px 0 28px;
+}
+
+.project-lead .project-specs li {
+  font-size: 16px;
+}
+
+/* sobre o fundo claro o botão lime precisa de contorno para se definir */
+.project-lead .btn-cta {
+  border-color: var(--black);
 }
 
 /* Faixa de números */
@@ -1060,7 +1116,7 @@ textarea {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
-  margin-top: 28px;
+  margin-top: 36px;
 }
 
 .stat {
@@ -1165,24 +1221,10 @@ textarea {
   border-color: var(--black);
 }
 
-/* Galeria da LP de projeto */
-
-.gallery-section {
-  padding: 90px 8vw 110px;
-}
-
-.gallery-wide {
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(35, 31, 32, 0.2);
-}
-
 .gallery-note {
-  margin-top: 18px;
+  padding: 14px 8vw 0;
   font-size: 13px;
   color: rgba(35, 31, 32, 0.6);
-  text-align: center;
 }
 
 /* TABLET */
@@ -1209,15 +1251,6 @@ textarea {
     max-width: 560px;
     margin: 0 auto;
     width: 100%;
-  }
-
-  .project-hero-card {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .project-hero-media {
-    aspect-ratio: 16 / 9;
-    min-height: 0;
   }
 
   .stat-strip {
@@ -1436,17 +1469,32 @@ textarea {
     text-align: center;
   }
 
-  .page-hero,
-  .project-hero {
+  .page-hero {
     padding: 120px 20px 48px;
   }
 
-  .project-hero-card {
-    border-radius: 28px;
+  .project-topbar {
+    padding: 100px 20px 16px;
   }
 
-  .project-hero-info {
-    padding: 28px 22px 30px;
+  .gallery-banner {
+    height: clamp(280px, 52vh, 420px);
+  }
+
+  .gallery-banner .gallery-dots {
+    bottom: 16px;
+  }
+
+  .project-lead {
+    padding: 36px 20px 0;
+  }
+
+  .project-refs {
+    font-size: 16px;
+  }
+
+  .gallery-note {
+    padding: 12px 20px 0;
   }
 
   .catalog {
@@ -1496,13 +1544,18 @@ textarea {
     padding: 24px;
   }
 
-  .gallery-section {
-    padding: 64px 20px 80px;
+  .projects-lede {
+    padding-left: 18px;
   }
 
-  .gallery-wide {
-    aspect-ratio: 4 / 3;
-    border-radius: 28px;
+  .projects-lede::after {
+    left: 18px;
+  }
+
+  .projects-lede .lede-arrow {
+    width: 34px;
+    height: 34px;
+    margin-left: 10px;
   }
 }
 
@@ -1535,11 +1588,12 @@ textarea {
   .section,
   .process,
   .page-hero,
-  .project-hero,
+  .project-topbar,
+  .project-lead,
+  .gallery-note,
   .catalog,
   .detail-section,
-  .amenities-section,
-  .gallery-section {
+  .amenities-section {
     padding-left: 18px;
     padding-right: 18px;
   }

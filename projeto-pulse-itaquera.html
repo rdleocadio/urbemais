@@ -62,56 +62,78 @@
   </header>
 
   <main>
-    <section class="project-hero">
-      <div class="hero-bg-grid" aria-hidden="true"></div>
-
-      <a href="projetos.html" class="breadcrumb reveal">
+    <section class="project-topbar">
+      <a href="projetos.html" class="breadcrumb">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
           <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
         Todos os projetos
       </a>
+    </section>
 
-      <article class="project-hero-card reveal card-reveal">
-        <div class="project-hero-media">
-          <img
-            src="assets/pulse_itaquera/web/fachada.jpg"
-            alt="Fachada do projeto Pulse Itaquera"
-          >
+    <section class="project-banner" aria-label="Espaços do Pulse Itaquera">
+      <div class="project-gallery gallery-banner">
+        <div class="gallery-track">
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/fachada.jpg" alt="Fachada do projeto Pulse Itaquera" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-01.jpg" alt="Casal no hall de entrada do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-02.jpg" alt="Casal na piscina com vista para a cidade no projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-03.jpg" alt="Casal na praça de convivência ao entardecer no projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-04.jpg" alt="Casal na praça de convivência com fire pit do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-05.jpg" alt="Moradores reunidos na churrasqueira do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-06.jpg" alt="Moradores comemorando no salão de festas do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-07.jpg" alt="Casal jogando sinuca no salão de jogos do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-08.jpg" alt="Moradora trabalhando no coworking do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-09.jpg" alt="Morador treinando no espaço fitness do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
+          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-10.jpg" alt="Moradores com cachorro no pet place do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
         </div>
 
-        <div class="project-hero-info">
-          <span class="tag">novo projeto &middot; Itaquera</span>
+        <button class="gallery-btn gallery-prev" type="button" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
 
-          <h1>Pulse Itaquera</h1>
+        <button class="gallery-btn gallery-next" type="button" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
 
-          <p class="project-hero-address">
-            Itaquera, São Paulo &middot; a 100 metros da Estação Dom Bosco
-          </p>
+        <div class="gallery-dots"></div>
+      </div>
+    </section>
 
-          <ul class="project-specs">
-            <li>26 a 90 m²</li>
-            <li>1, 2 e 3 dormitórios, com opções de suíte e vaga</li>
-            <li>Torre única de 27 pavimentos, com Gardens e coberturas</li>
-            <li>Minha Casa Minha Vida &middot; HIS 1 e HMP</li>
-          </ul>
+    <p class="gallery-note">
+      Imagens ilustrativas. Perspectivas artísticas dos ambientes do empreendimento.
+    </p>
 
-          <div class="project-actions">
-            <a
-              href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Vi%20o%20projeto%20Pulse%20Itaquera%20da%20urbe%2B%20e%20quero%20saber%20mais%20sobre%20esse%20empreendimento%20pelo%20Minha%20Casa%20Minha%20Vida."
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-cta"
-            >
-              Fale com a gente
-            </a>
+    <section class="project-lead">
+      <span class="tag">novo projeto &middot; Itaquera</span>
 
-            <a href="index.html#simulacao" class="btn-ghost">
-              Simular minha entrada
-            </a>
-          </div>
-        </div>
-      </article>
+      <h1>Pulse Itaquera</h1>
+
+      <p class="project-refs">
+        No bairro de Itaquera, São Paulo. A 2 minutos a pé (100 metros) da
+        Estação Dom Bosco da CPTM e a 2 minutos a pé da Av. Jacu Pêssego.
+      </p>
+
+      <ul class="project-specs">
+        <li>26 a 90 m²</li>
+        <li>1, 2 e 3 dormitórios, com opções de suíte e vaga</li>
+        <li>Torre única de 27 pavimentos, com Gardens e coberturas</li>
+        <li>Minha Casa Minha Vida &middot; HIS 1 e HMP</li>
+      </ul>
+
+      <div class="project-actions">
+        <a
+          href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Quero%20or%C3%A7ar%20o%20projeto%20Pulse%20Itaquera%20pelo%20Minha%20Casa%20Minha%20Vida."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-cta"
+        >
+          Quero orçar esse projeto
+        </a>
+      </div>
 
       <div class="stat-strip reveal">
         <div class="stat">
@@ -135,6 +157,7 @@
         </div>
       </div>
     </section>
+
 
     <section class="detail-section" aria-labelledby="ficha-title">
       <div class="section-title reveal">
@@ -225,63 +248,21 @@
       </div>
     </section>
 
-    <section class="gallery-section" aria-labelledby="galeria-title">
-      <div class="section-title reveal">
-        <span>galeria</span>
-
-        <h2 id="galeria-title">Conheça os espaços.</h2>
-      </div>
-
-      <div class="project-gallery gallery-wide reveal card-reveal">
-        <div class="gallery-track">
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/fachada.jpg" alt="Fachada do projeto Pulse Itaquera" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-01.jpg" alt="Casal no hall de entrada do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-02.jpg" alt="Casal na piscina com vista para a cidade no projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-03.jpg" alt="Casal na praça de convivência ao entardecer no projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-04.jpg" alt="Casal na praça de convivência com fire pit do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-05.jpg" alt="Moradores reunidos na churrasqueira do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-06.jpg" alt="Moradores comemorando no salão de festas do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-07.jpg" alt="Casal jogando sinuca no salão de jogos do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-08.jpg" alt="Moradora trabalhando no coworking do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-09.jpg" alt="Morador treinando no espaço fitness do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-          <div class="gallery-slide"><img src="assets/pulse_itaquera/web/foto-10.jpg" alt="Moradores com cachorro no pet place do projeto Pulse Itaquera" loading="lazy" draggable="false"></div>
-        </div>
-
-        <button class="gallery-btn gallery-prev" type="button" aria-label="Foto anterior">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-
-        <button class="gallery-btn gallery-next" type="button" aria-label="Próxima foto">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-
-        <div class="gallery-dots"></div>
-      </div>
-
-      <p class="gallery-note reveal">
-        Imagens ilustrativas. Perspectivas artísticas dos ambientes do empreendimento.
-      </p>
-    </section>
-
     <section class="process" aria-labelledby="cta-title">
       <div class="section-title reveal">
         <span>próximo passo</span>
 
-        <h2 id="cta-title">Vamos simular sua entrada?</h2>
+        <h2 id="cta-title">Vamos orçar esse projeto?</h2>
       </div>
 
       <div class="process-cta reveal">
         <a
-          href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Quero%20simular%20minha%20entrada%20no%20Pulse%20Itaquera%20pelo%20Minha%20Casa%20Minha%20Vida."
+          href="https://wa.me/5511994159261?text=Ol%C3%A1%21%20Quero%20or%C3%A7ar%20o%20projeto%20Pulse%20Itaquera%20pelo%20Minha%20Casa%20Minha%20Vida."
           target="_blank"
           rel="noopener noreferrer"
           class="btn-cta"
         >
-          Fale com a gente
+          Quero orçar esse projeto
         </a>
 
         <a href="projetos.html" class="btn-ghost">
