@@ -1,8 +1,9 @@
 const menuBtn = document.getElementById('menuBtn');
 const nav = document.getElementById('nav');
 
-menuBtn.addEventListener('click', () => {
-  nav.classList.toggle('active');
+menuBtn?.addEventListener('click', () => {
+  const isOpen = nav.classList.toggle('active');
+  menuBtn.setAttribute('aria-expanded', String(isOpen));
 });
 
 document.querySelectorAll('.nav a').forEach(link => {
@@ -45,7 +46,7 @@ document.addEventListener('mousemove', event => {
 const form = document.getElementById('leadForm');
 const feedback = document.getElementById('formFeedback');
 
-form.addEventListener('submit', event => {
+form?.addEventListener('submit', event => {
   event.preventDefault();
 
   const data = Object.fromEntries(new FormData(form).entries());
@@ -213,6 +214,8 @@ if (projectsTrack && projectsDots) {
 }
 
 document.addEventListener('click', event => {
+  if (!nav || !menuBtn) return;
+
   const clickedInsideMenu = nav.contains(event.target);
   const clickedMenuButton = menuBtn.contains(event.target);
 

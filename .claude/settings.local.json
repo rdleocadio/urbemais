@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -LiteralPath \"C:\\\\Users\\\\rodrigo.leocadio\\\\OneDrive - Serena\\\\Área de Trabalho\\\\Urbemais\\\\PDFS\" | ForEach-Object { $n=$_.Name; $codes = \\($n.ToCharArray\\(\\) | ForEach-Object { [int]$_ }\\) -join ','; \"$n  ==>  $codes\" })",
+      "PowerShell(& \"C:\\\\Users\\\\RODRIG~1.LEO\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\--wsl-localhost-Ubuntu-home-rdleocadio-code-urbemais\\\\9acb00d5-3f75-4c4e-9452-d133573ff960\\\\scratchpad\\\\validate.ps1\")"
+    ]
+  }
+}
