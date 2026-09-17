@@ -266,6 +266,8 @@ textarea {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: 40px;
   align-items: stretch;
+  max-width: 1180px;
+  margin: 0 auto;
 }
 
 .tag,
@@ -447,9 +449,9 @@ h2 {
   align-items: stretch;
   min-width: 0;
   background: var(--black);
-  border-radius: var(--radius-xl);
+  border-radius: 26px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(35, 31, 32, 0.2);
+  box-shadow: 0 20px 54px rgba(35, 31, 32, 0.18);
 }
 
 .project-gallery {
@@ -562,13 +564,13 @@ h2 {
 .project-info {
   flex: 1 1 0;
   min-width: 0;
-  padding: 32px 34px 34px;
+  padding: 22px 26px 26px;
   color: var(--off);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .project-info .tag {
@@ -576,9 +578,11 @@ h2 {
 }
 
 .project-info h3 {
+  align-self: stretch;
   font-family: var(--title);
-  font-size: 30px;
+  font-size: 23px;
   letter-spacing: -0.5px;
+  text-align: center;
   margin-bottom: 4px;
 }
 
@@ -597,6 +601,10 @@ h2 {
   font-size: 15px;
 }
 
+.project-info .project-specs li {
+  font-size: 13px;
+}
+
 .project-specs li::before {
   content: '';
   position: absolute;
@@ -610,9 +618,9 @@ h2 {
 
 .project-info p {
   color: var(--sage);
-  line-height: 1.6;
-  font-size: 15px;
-  margin-bottom: 12px;
+  line-height: 1.55;
+  font-size: 13px;
+  margin-bottom: 10px;
 }
 
 .btn-cta {
@@ -662,8 +670,8 @@ h2 {
 
 .project-cover {
   position: relative;
-  aspect-ratio: 16 / 10;
-  min-height: 220px;
+  aspect-ratio: 16 / 9;
+  min-height: 180px;
   background: #000;
   overflow: hidden;
 }
@@ -680,6 +688,12 @@ h2 {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 4px;
+}
+
+.project-info .btn-cta,
+.project-info .btn-ghost {
+  padding: 10px 18px;
+  font-size: 13px;
 }
 
 /* CARROSSEL DE PROJETOS */
@@ -949,7 +963,7 @@ textarea {
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 32px;
+  gap: 26px;
 }
 
 .catalog-card {
@@ -957,7 +971,7 @@ textarea {
   flex-direction: column;
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(35, 31, 32, 0.12);
-  border-radius: var(--radius-xl);
+  border-radius: 26px;
   overflow: hidden;
   transition: 0.3s ease;
 }
@@ -965,54 +979,60 @@ textarea {
 .catalog-card:hover {
   transform: translateY(-6px);
   border-color: var(--black);
-  box-shadow: 0 30px 70px rgba(35, 31, 32, 0.18);
+  box-shadow: 0 24px 56px rgba(35, 31, 32, 0.16);
 }
 
 .catalog-media {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   background: #000;
   overflow: hidden;
 }
 
-.catalog-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: 0.6s ease;
-}
-
-.catalog-card:hover .catalog-media img {
-  transform: scale(1.05);
+.catalog-media .gallery-btn {
+  width: 36px;
+  height: 36px;
 }
 
 .catalog-badge {
   position: absolute;
-  left: 16px;
-  bottom: 16px;
-  padding: 9px 15px;
+  left: 14px;
+  top: 14px;
+  bottom: auto;
+  padding: 8px 13px;
   border-radius: 999px;
   background: rgba(35, 31, 32, 0.82);
   backdrop-filter: blur(6px);
   color: var(--off);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .catalog-body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  padding: 30px 30px 32px;
+  gap: 8px;
+  padding: 22px 24px 26px;
 }
 
 .catalog-body h2 {
-  font-size: 32px;
-  letter-spacing: -1px;
+  align-self: stretch;
+  font-size: 23px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.catalog-body .project-specs {
+  margin-bottom: 0;
+}
+
+.catalog-body .project-specs li {
+  font-size: 13px;
 }
 
 .catalog-body .project-specs li::before,
@@ -1022,8 +1042,8 @@ textarea {
 
 .catalog-body p {
   color: rgba(35, 31, 32, 0.72);
-  line-height: 1.6;
-  font-size: 15px;
+  line-height: 1.55;
+  font-size: 13px;
 }
 
 .catalog-link {
@@ -1031,6 +1051,7 @@ textarea {
   align-items: center;
   gap: 6px;
   margin-top: 6px;
+  font-size: 13px;
   font-weight: 800;
   transition: 0.3s ease;
 }
@@ -1050,35 +1071,46 @@ textarea {
   margin-bottom: 0;
 }
 
-.project-banner {
-  position: relative;
-  width: 100%;
+.project-hero {
+  padding: 8px 8vw 0;
 }
 
-.gallery-banner {
-  height: clamp(360px, 64vh, 640px);
+.project-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 44px;
+  align-items: stretch;
+}
+
+.project-hero-media {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.project-hero-gallery {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 420px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
   background: #000;
 }
 
-.gallery-banner .gallery-btn {
-  width: 52px;
-  height: 52px;
+.project-hero-gallery .gallery-btn {
+  width: 48px;
+  height: 48px;
 }
 
-.gallery-banner .gallery-prev {
-  left: 26px;
-}
-
-.gallery-banner .gallery-next {
-  right: 26px;
-}
-
-.gallery-banner .gallery-dots {
-  bottom: 22px;
+.project-hero-media .gallery-note {
+  padding: 14px 4px 0;
 }
 
 .project-lead {
-  padding: 52px 8vw 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
 }
 
 .project-lead h1 {
@@ -1255,6 +1287,14 @@ textarea {
 
   .stat-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-hero-gallery {
+    min-height: 340px;
   }
 }
 
@@ -1454,7 +1494,7 @@ textarea {
   }
 
   .project-info h3 {
-    font-size: 25px;
+    font-size: 21px;
   }
 
   .project-actions {
@@ -1477,24 +1517,24 @@ textarea {
     padding: 100px 20px 16px;
   }
 
-  .gallery-banner {
-    height: clamp(280px, 52vh, 420px);
+  .project-hero {
+    padding: 4px 20px 0;
   }
 
-  .gallery-banner .gallery-dots {
-    bottom: 16px;
+  .project-hero-grid {
+    gap: 28px;
   }
 
-  .project-lead {
-    padding: 36px 20px 0;
+  .project-hero-gallery {
+    min-height: 260px;
   }
 
   .project-refs {
     font-size: 16px;
   }
 
-  .gallery-note {
-    padding: 12px 20px 0;
+  .project-hero-media .gallery-note {
+    padding: 10px 2px 0;
   }
 
   .catalog {
@@ -1589,8 +1629,7 @@ textarea {
   .process,
   .page-hero,
   .project-topbar,
-  .project-lead,
-  .gallery-note,
+  .project-hero,
   .catalog,
   .detail-section,
   .amenities-section {

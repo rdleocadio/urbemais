@@ -222,7 +222,7 @@ if (projectsTrack && projectsDots) {
 
   /* AUTOPLAY: passa de projeto em projeto sozinho, pausando quando a pessoa interage */
 
-  const AUTOPLAY_MS = 5000;
+  const AUTOPLAY_MS = 3000;
   const carousel = projectsTrack.closest('.projects-carousel');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
