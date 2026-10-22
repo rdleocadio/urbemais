@@ -1,0 +1,12 @@
+{
+  "name": "urbe+",
+  "short_name": "urbe+",
+  "icons": [
+    { "src": "assets/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "start_url": "index.html",
+  "theme_color": "#9DA896",
+  "background_color": "#E3FFD2",
+  "display": "standalone"
+}
