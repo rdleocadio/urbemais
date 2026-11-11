@@ -285,8 +285,8 @@ document.addEventListener('click', event => {
   }
 });
 
-// Filtro de bairros do catálogo: lê o bairro do selo de cada card (texto antes do "·"),
-// então projetos novos entram no filtro sem alterar este código.
+// Filtro de bairros do catálogo (multisseleção): lê o bairro do selo de cada card
+// (texto antes do "·"), então projetos novos entram no filtro sem alterar este código.
 const catalogFilter = document.getElementById('catalogFilter');
 const catalogCards = document.querySelectorAll('.catalog-card');
 
@@ -300,31 +300,57 @@ if (catalogFilter && catalogCards.length) {
     if (bairro) counts.set(bairro, (counts.get(bairro) || 0) + 1);
   });
 
-  const options = [['', 'Todos', catalogCards.length]]
-    .concat([...counts].sort((a, b) => a[0].localeCompare(b[0], 'pt-BR')).map(([b, n]) => [b, b, n]));
+  const bairros = [...counts].sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'));
 
-  options.forEach(([value, label, total], i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'filter-chip' + (i === 0 ? ' active' : '');
-    btn.dataset.bairro = value;
-    btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-    btn.innerHTML = label + '<small>' + total + '</small>';
-    catalogFilter.appendChild(btn);
-  });
+  catalogFilter.innerHTML =
+    '<div class="filter-bar">' +
+      '<button type="button" class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">' +
+        '<span id="filterLabel">Filtrar por bairro</span>' +
+        '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>' +
+      '</button>' +
+      '<span class="filter-status" id="filterStatus" aria-live="polite"></span>' +
+      '<button type="button" class="filter-clear" id="filterClear" hidden>Limpar</button>' +
+    '</div>' +
+    '<div class="filter-panel" id="filterPanel" hidden>' +
+      bairros.map(([b, n]) =>
+        '<label class="filter-option"><input type="checkbox" value="' + b + '"><span>' + b + ' <small>(' + n + ')</small></span></label>'
+      ).join('') +
+    '</div>';
 
-  catalogFilter.addEventListener('click', event => {
-    const btn = event.target.closest('.filter-chip');
-    if (!btn) return;
+  const toggle = document.getElementById('filterToggle');
+  const label = document.getElementById('filterLabel');
+  const status = document.getElementById('filterStatus');
+  const clear = document.getElementById('filterClear');
+  const panel = document.getElementById('filterPanel');
+  const boxes = panel.querySelectorAll('input');
 
-    catalogFilter.querySelectorAll('.filter-chip').forEach(chip => {
-      const on = chip === btn;
-      chip.classList.toggle('active', on);
-      chip.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
+  const apply = () => {
+    const selected = [...boxes].filter(box => box.checked).map(box => box.value);
+    let shown = 0;
 
     catalogCards.forEach(card => {
-      card.hidden = !!btn.dataset.bairro && card.dataset.bairro !== btn.dataset.bairro;
+      card.hidden = selected.length > 0 && !selected.includes(card.dataset.bairro);
+      if (!card.hidden) shown++;
     });
+
+    label.textContent = selected.length ? 'Bairros (' + selected.length + ')' : 'Filtrar por bairro';
+    toggle.classList.toggle('has-selection', selected.length > 0);
+    status.textContent = selected.length ? shown + ' de ' + catalogCards.length + ' projetos' : '';
+    clear.hidden = selected.length === 0;
+  };
+
+  const setOpen = open => {
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  toggle.addEventListener('click', () => setOpen(panel.hidden));
+  panel.addEventListener('change', apply);
+  clear.addEventListener('click', () => {
+    boxes.forEach(box => { box.checked = false; });
+    apply();
+  });
+  document.addEventListener('click', event => {
+    if (!catalogFilter.contains(event.target)) setOpen(false);
   });
 }
