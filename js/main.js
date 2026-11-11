@@ -309,18 +309,24 @@ if (catalogFilter && catalogCards.length) {
         '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>' +
       '</button>' +
       '<span class="filter-status" id="filterStatus" aria-live="polite"></span>' +
-      '<button type="button" class="filter-clear" id="filterClear" hidden>Limpar</button>' +
     '</div>' +
     '<div class="filter-panel" id="filterPanel" hidden>' +
-      bairros.map(([b, n]) =>
-        '<label class="filter-option"><input type="checkbox" value="' + b + '"><span>' + b + ' <small>(' + n + ')</small></span></label>'
-      ).join('') +
+      '<div class="filter-options">' +
+        bairros.map(([b, n]) =>
+          '<label class="filter-option"><input type="checkbox" value="' + b + '"><span>' + b + ' <small>(' + n + ')</small></span></label>'
+        ).join('') +
+      '</div>' +
+      '<div class="filter-actions">' +
+        '<button type="button" class="filter-clear" id="filterClear">Limpar</button>' +
+        '<button type="button" class="filter-confirm" id="filterConfirm">Ver projetos</button>' +
+      '</div>' +
     '</div>';
 
   const toggle = document.getElementById('filterToggle');
   const label = document.getElementById('filterLabel');
   const status = document.getElementById('filterStatus');
   const clear = document.getElementById('filterClear');
+  const confirm = document.getElementById('filterConfirm');
   const panel = document.getElementById('filterPanel');
   const boxes = panel.querySelectorAll('input');
 
@@ -336,7 +342,7 @@ if (catalogFilter && catalogCards.length) {
     label.textContent = selected.length ? 'Bairros (' + selected.length + ')' : 'Filtrar por bairro';
     toggle.classList.toggle('has-selection', selected.length > 0);
     status.textContent = selected.length ? shown + ' de ' + catalogCards.length + ' projetos' : '';
-    clear.hidden = selected.length === 0;
+    confirm.textContent = selected.length ? 'Ver ' + shown + (shown === 1 ? ' projeto' : ' projetos') : 'Ver projetos';
   };
 
   const setOpen = open => {
@@ -349,6 +355,10 @@ if (catalogFilter && catalogCards.length) {
   clear.addEventListener('click', () => {
     boxes.forEach(box => { box.checked = false; });
     apply();
+  });
+  confirm.addEventListener('click', () => {
+    setOpen(false);
+    catalogFilter.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   document.addEventListener('click', event => {
     if (!catalogFilter.contains(event.target)) setOpen(false);
