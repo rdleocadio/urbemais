@@ -960,6 +960,50 @@ textarea {
   padding: 40px 8vw 110px;
 }
 
+.catalog-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.catalog-filter:empty {
+  display: none;
+}
+
+.filter-chip {
+  border: 1px solid rgba(35, 31, 32, 0.25);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-family: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  background: transparent;
+  color: var(--black);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.filter-chip:hover {
+  border-color: var(--black);
+}
+
+.filter-chip.active {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--off);
+}
+
+.filter-chip small {
+  margin-left: 6px;
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+.catalog-card[hidden] {
+  display: none;
+}
+
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

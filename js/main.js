@@ -284,3 +284,47 @@ document.addEventListener('click', event => {
     menuBtn.setAttribute('aria-expanded', 'false');
   }
 });
+
+// Filtro de bairros do catálogo: lê o bairro do selo de cada card (texto antes do "·"),
+// então projetos novos entram no filtro sem alterar este código.
+const catalogFilter = document.getElementById('catalogFilter');
+const catalogCards = document.querySelectorAll('.catalog-card');
+
+if (catalogFilter && catalogCards.length) {
+  const counts = new Map();
+
+  catalogCards.forEach(card => {
+    const badge = card.querySelector('.catalog-badge');
+    const bairro = badge ? badge.textContent.split('·')[0].trim() : '';
+    card.dataset.bairro = bairro;
+    if (bairro) counts.set(bairro, (counts.get(bairro) || 0) + 1);
+  });
+
+  const options = [['', 'Todos', catalogCards.length]]
+    .concat([...counts].sort((a, b) => a[0].localeCompare(b[0], 'pt-BR')).map(([b, n]) => [b, b, n]));
+
+  options.forEach(([value, label, total], i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'filter-chip' + (i === 0 ? ' active' : '');
+    btn.dataset.bairro = value;
+    btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    btn.innerHTML = label + '<small>' + total + '</small>';
+    catalogFilter.appendChild(btn);
+  });
+
+  catalogFilter.addEventListener('click', event => {
+    const btn = event.target.closest('.filter-chip');
+    if (!btn) return;
+
+    catalogFilter.querySelectorAll('.filter-chip').forEach(chip => {
+      const on = chip === btn;
+      chip.classList.toggle('active', on);
+      chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+
+    catalogCards.forEach(card => {
+      card.hidden = !!btn.dataset.bairro && card.dataset.bairro !== btn.dataset.bairro;
+    });
+  });
+}
