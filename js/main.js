@@ -285,82 +285,147 @@ document.addEventListener('click', event => {
   }
 });
 
-// Filtro de bairros do catálogo (multisseleção): lê o bairro do selo de cada card
-// (texto antes do "·"), então projetos novos entram no filtro sem alterar este código.
+// Filtros do catálogo (bairro e zona, ambos com multisseleção): lê o bairro do selo de cada
+// card (texto antes do "·"), então projetos novos entram no filtro de bairro sem alterar este
+// código. A zona sai do de/para abaixo; um bairro novo precisa ser incluído nele para
+// aparecer no filtro de zona. Os dois filtros se combinam: o card precisa passar nos dois.
+const ZONA_POR_BAIRRO = {
+  'Alto da Boa Vista': 'Sul',
+  'Cambuci': 'Centro',
+  'Freguesia do Ó': 'Norte',
+  'Giovanni Gronchi': 'Sul',
+  'Granja Julieta': 'Sul',
+  'Guaianases': 'Leste',
+  'Interlagos': 'Sul',
+  'Ipiranga': 'Sul',
+  'Itaquera': 'Leste',
+  'Jaçanã': 'Norte',
+  'Lapa': 'Oeste',
+  'Osasco': 'Oeste',
+  'Sacomã': 'Sul',
+  'Santa Cecília': 'Centro',
+  'Santo Amaro': 'Sul',
+  'Vila Carrão': 'Leste'
+};
+
+const ZONAS = ['Norte', 'Sul', 'Leste', 'Oeste', 'Centro'];
+
 const catalogFilter = document.getElementById('catalogFilter');
 const catalogCards = document.querySelectorAll('.catalog-card');
 
 if (catalogFilter && catalogCards.length) {
-  const counts = new Map();
+  const bairroCounts = new Map();
+  const zonaCounts = new Map();
 
   catalogCards.forEach(card => {
     const badge = card.querySelector('.catalog-badge');
     const bairro = badge ? badge.textContent.split('·')[0].trim() : '';
+    const zona = ZONA_POR_BAIRRO[bairro] || '';
     card.dataset.bairro = bairro;
-    if (bairro) counts.set(bairro, (counts.get(bairro) || 0) + 1);
+    card.dataset.zona = zona;
+    if (bairro) bairroCounts.set(bairro, (bairroCounts.get(bairro) || 0) + 1);
+    if (zona) zonaCounts.set(zona, (zonaCounts.get(zona) || 0) + 1);
   });
 
-  const bairros = [...counts].sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'));
+  const filters = [
+    {
+      id: 'bairro',
+      key: 'bairro',
+      title: 'Filtrar por bairro',
+      short: 'Bairros',
+      options: [...bairroCounts].sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
+    },
+    {
+      id: 'zona',
+      key: 'zona',
+      title: 'Filtrar por zona',
+      short: 'Zonas',
+      options: ZONAS.filter(z => zonaCounts.has(z)).map(z => [z, zonaCounts.get(z)])
+    }
+  ];
+
+  const chevron = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
 
   catalogFilter.innerHTML =
     '<div class="filter-bar">' +
-      '<button type="button" class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterPanel">' +
-        '<span id="filterLabel">Filtrar por bairro</span>' +
-        '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>' +
-      '</button>' +
+      filters.map(f =>
+        '<button type="button" class="filter-toggle" id="' + f.id + 'Toggle" aria-expanded="false" aria-controls="' + f.id + 'Panel">' +
+          '<span id="' + f.id + 'Label">' + f.title + '</span>' + chevron +
+        '</button>'
+      ).join('') +
       '<span class="filter-status" id="filterStatus" aria-live="polite"></span>' +
     '</div>' +
-    '<div class="filter-panel" id="filterPanel" hidden>' +
-      '<div class="filter-options">' +
-        bairros.map(([b, n]) =>
-          '<label class="filter-option"><input type="checkbox" value="' + b + '"><span>' + b + ' <small>(' + n + ')</small></span></label>'
-        ).join('') +
-      '</div>' +
-      '<div class="filter-actions">' +
-        '<button type="button" class="filter-clear" id="filterClear">Limpar</button>' +
-        '<button type="button" class="filter-confirm" id="filterConfirm">Ver projetos</button>' +
-      '</div>' +
-    '</div>';
+    filters.map(f =>
+      '<div class="filter-panel" id="' + f.id + 'Panel" hidden>' +
+        '<div class="filter-options">' +
+          f.options.map(([value, n]) =>
+            '<label class="filter-option"><input type="checkbox" value="' + value + '"><span>' + value + ' <small>(' + n + ')</small></span></label>'
+          ).join('') +
+        '</div>' +
+        '<div class="filter-actions">' +
+          '<button type="button" class="filter-clear" id="' + f.id + 'Clear">Limpar</button>' +
+          '<button type="button" class="filter-confirm" id="' + f.id + 'Confirm">Ver projetos</button>' +
+        '</div>' +
+      '</div>'
+    ).join('');
 
-  const toggle = document.getElementById('filterToggle');
-  const label = document.getElementById('filterLabel');
   const status = document.getElementById('filterStatus');
-  const clear = document.getElementById('filterClear');
-  const confirm = document.getElementById('filterConfirm');
-  const panel = document.getElementById('filterPanel');
-  const boxes = panel.querySelectorAll('input');
+
+  filters.forEach(f => {
+    f.toggle = document.getElementById(f.id + 'Toggle');
+    f.label = document.getElementById(f.id + 'Label');
+    f.panel = document.getElementById(f.id + 'Panel');
+    f.clear = document.getElementById(f.id + 'Clear');
+    f.confirm = document.getElementById(f.id + 'Confirm');
+    f.boxes = f.panel.querySelectorAll('input');
+  });
+
+  const selectedOf = f => [...f.boxes].filter(box => box.checked).map(box => box.value);
 
   const apply = () => {
-    const selected = [...boxes].filter(box => box.checked).map(box => box.value);
+    const selections = filters.map(f => ({ f, selected: selectedOf(f) }));
     let shown = 0;
 
     catalogCards.forEach(card => {
-      card.hidden = selected.length > 0 && !selected.includes(card.dataset.bairro);
+      card.hidden = selections.some(({ f, selected }) =>
+        selected.length > 0 && !selected.includes(card.dataset[f.key])
+      );
       if (!card.hidden) shown++;
     });
 
-    label.textContent = selected.length ? 'Bairros (' + selected.length + ')' : 'Filtrar por bairro';
-    toggle.classList.toggle('has-selection', selected.length > 0);
-    status.textContent = selected.length ? shown + ' de ' + catalogCards.length + ' projetos' : '';
-    confirm.textContent = selected.length ? 'Ver ' + shown + (shown === 1 ? ' projeto' : ' projetos') : 'Ver projetos';
+    const active = selections.some(({ selected }) => selected.length > 0);
+
+    selections.forEach(({ f, selected }) => {
+      f.label.textContent = selected.length ? f.short + ' (' + selected.length + ')' : f.title;
+      f.toggle.classList.toggle('has-selection', selected.length > 0);
+      f.confirm.textContent = active ? 'Ver ' + shown + (shown === 1 ? ' projeto' : ' projetos') : 'Ver projetos';
+    });
+
+    status.textContent = active ? shown + ' de ' + catalogCards.length + ' projetos' : '';
   };
 
-  const setOpen = open => {
-    panel.hidden = !open;
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const setOpen = (target, open) => {
+    filters.forEach(f => {
+      const isOpen = f === target && open;
+      f.panel.hidden = !isOpen;
+      f.toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
   };
 
-  toggle.addEventListener('click', () => setOpen(panel.hidden));
-  panel.addEventListener('change', apply);
-  clear.addEventListener('click', () => {
-    boxes.forEach(box => { box.checked = false; });
-    apply();
+  filters.forEach(f => {
+    f.toggle.addEventListener('click', () => setOpen(f, f.panel.hidden));
+    f.panel.addEventListener('change', apply);
+    f.clear.addEventListener('click', () => {
+      f.boxes.forEach(box => { box.checked = false; });
+      apply();
+    });
+    f.confirm.addEventListener('click', () => {
+      setOpen(f, false);
+      catalogFilter.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   });
-  confirm.addEventListener('click', () => {
-    setOpen(false);
-    catalogFilter.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+
   document.addEventListener('click', event => {
-    if (!catalogFilter.contains(event.target)) setOpen(false);
+    if (!catalogFilter.contains(event.target)) setOpen(null, false);
   });
 }
