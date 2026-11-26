@@ -302,6 +302,7 @@ const ZONA_POR_BAIRRO = {
   'Jaçanã': 'Norte',
   'Lapa': 'Oeste',
   'Osasco': 'Oeste',
+  'República': 'Centro',
   'Sacomã': 'Sul',
   'Santa Cecília': 'Centro',
   'Santo Amaro': 'Sul',
